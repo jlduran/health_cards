@@ -17,7 +17,7 @@ This Issuer supports the three defined [methods of retrieving a SMART Health Car
 The Verifier supports scanning QR codes.
 
 ### System Requirements
- - Ruby 2.7 (prior versions may work but are not tested)
+ - Ruby 3.0.6 (prior versions may work but are not tested)
  - [Bundler](https://bundler.io)
  - [Node.js](https://nodejs.org/en/)
  - [Yarn](https://yarnpkg.com)
@@ -54,7 +54,7 @@ By default this value is `http://localhost:3000`.
 The Docker container will be running at `http://127.0.0.1:3000`, unless mapped to a different port.
 
 
-#### Docker Compose 
+#### Docker Compose
 
 Docker Compose can be used to deploy a production version of the application behind nginx and is
 especially useful for deploying behind an SSL terminating load balancer.
@@ -66,11 +66,11 @@ docker-compose up --build
 There are two environment variables which can be configured:
 
 * `HEALTH_CARDS_HOST` is used as the `iss` value in issued Health Cards and for identifying the SMART Endpoint locations
-* `HEALTH_CARDS_SECRET_KEY_BASE` is used by rails as the input secret to the application's key generator, 
-which in turn is used to create all MessageVerifiers/MessageEncryptors, including the ones that 
+* `HEALTH_CARDS_SECRET_KEY_BASE` is used by rails as the input secret to the application's key generator,
+which in turn is used to create all MessageVerifiers/MessageEncryptors, including the ones that
 sign and encrypt cookies. [See `secret_key_base`](https://api.rubyonrails.org/classes/Rails/Application.html#method-i-secret_key_base)
 
-When deploying a production instance it is important that a new secret base is generated and used. 
+When deploying a production instance it is important that a new secret base is generated and used.
 A new secret base can be generated with `bin/rails secret`.
 
 When testing locally `proxy_set_header  X-Forwarded-Ssl on;` should be commented out in `nginx/nginx.conf`.
@@ -103,7 +103,7 @@ Or install it yourself as:
 
 ### Documentation
 
-See usage examples in [USAGE.md](https://github.com/dvci/health_cards/blob/main/lib/USAGE.md). 
+See usage examples in [USAGE.md](https://github.com/dvci/health_cards/blob/main/lib/USAGE.md).
 
 See full documentation in [API.md](https://github.com/dvci/health_cards/blob/main/lib/API.md).
 
