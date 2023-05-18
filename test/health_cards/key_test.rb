@@ -28,6 +28,7 @@ class KeyTest < ActiveSupport::TestCase
 
   test 'kid calculation is correct' do
     jwk = HealthCards::Key.from_jwk(@test_jwk)
+
     assert_equal jwk.kid, @test_jwk[:kid]
   end
 
@@ -55,6 +56,7 @@ class KeyTest < ActiveSupport::TestCase
     assert_equal @key.kid, jwk_key.kid
 
     new_jwk = jwk_key.to_jwk
+
     assert_equal jwk[:x], new_jwk[:x]
     assert_equal jwk[:y], new_jwk[:y]
     assert_equal jwk[:d], new_jwk[:d]
@@ -73,12 +75,14 @@ class KeyTest < ActiveSupport::TestCase
     assert_equal @key.kid, jwk_key.kid
 
     new_jwk = jwk_key.to_jwk
+
     assert_equal jwk[:x], new_jwk[:x]
     assert_equal jwk[:y], new_jwk[:y]
   end
 
   test 'public coordinates doesn\'t include d' do
     pk = @key.public_key
+
     assert_nil pk.public_coordinates[:d]
     assert_equal @key.public_coordinates, pk.coordinates
   end
@@ -94,6 +98,7 @@ class KeyTest < ActiveSupport::TestCase
   test 'verify payload' do
     payload = 'foo'
     sigg = @key.sign('foo')
+
     assert @key.public_key.verify(payload, sigg)
   end
 end

@@ -24,6 +24,7 @@ class COVIDLabResultPayloadTest < ActiveSupport::TestCase
 
   test 'minified lab result entries' do
     bundle = @lab_result_card.strip_fhir_bundle
+
     assert_equal 2, bundle.entry.size
     obs = bundle.entry[1].resource
 

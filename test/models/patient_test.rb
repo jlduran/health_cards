@@ -6,8 +6,10 @@ class PatientTest < ActiveSupport::TestCase
   test 'json serialization' do
     p1 = Patient.create(given: 'Foo', family: 'Bar', gender: 'male',
                         birth_date: Time.zone.today)
-    assert p1.valid?, p1.errors.full_messages.join(', ')
+
+    assert_predicate p1, :valid?, p1.errors.full_messages.join(', ')
     p2 = Patient.find(p1.id)
+
     assert_equal p1.given, p2.given
     assert_equal p1.family, p2.family
     assert_equal p1.gender, p2.gender
@@ -23,12 +25,14 @@ class PatientTest < ActiveSupport::TestCase
   test 'use name.text if no given name' do
     text = 'Foo'
     pat = Patient.new(json: FHIR::Patient.new(name: [{ text: text }]))
+
     assert_equal text, pat.given
   end
 
   test 'invalid fhir json' do
     patient = Patient.create(json: FHIR::Patient.new(gender: 'INVALID GENDER'))
-    assert patient.new_record?
+
+    assert_predicate patient, :new_record?
   end
 
   test 'payload creation from patient and immunization json' do
@@ -41,7 +45,7 @@ class PatientTest < ActiveSupport::TestCase
 
     bundle = patient.to_bundle(rails_issuer.url)
 
-    assert bundle.valid?
+    assert_predicate bundle, :valid?
 
     payload = HealthCards::Payload.new(bundle: bundle, issuer: 'http://example.org')
 
@@ -54,15 +58,18 @@ class PatientTest < ActiveSupport::TestCase
 
   test 'test blank date' do
     patient = Patient.create(given: 'foo', birth_date: '')
-    assert patient.birth_date.nil?
-    assert patient.json.birthDate.nil?
+
+    assert_nil patient.birth_date
+    assert_nil patient.json.birthDate
   end
 
   test 'update patient' do
     patient = Patient.create
     given = 'foo'
+
     assert patient.update(given: given)
     patient.reload
+
     assert_equal given, patient.given
   end
 end

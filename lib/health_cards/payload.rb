@@ -35,7 +35,7 @@ module HealthCards
       StructureDefinition|StructureMap|Subscription|Substance|SubstanceNucleicAcid|SubstancePolymer|SubstanceProtein|
       SubstanceReferenceInformation|SubstanceSourceMaterial|SubstanceSpecification|SupplyDelivery|SupplyRequest|Task|
       TerminologyCapabilities|TestReport|TestScript|ValueSet|VerificationResult|VisionPrescription)/
-      [A-Za-z0-9\-.]{1,64}(/_history/[A-Za-z0-9\-.]{1,64})?}x.freeze
+      [A-Za-z0-9\-.]{1,64}(/_history/[A-Za-z0-9\-.]{1,64})?}x
 
     attr_reader :issuer, :nbf, :bundle
 

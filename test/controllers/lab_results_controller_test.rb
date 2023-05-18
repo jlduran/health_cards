@@ -10,11 +10,13 @@ class LabResultsControllerTest < ActionDispatch::IntegrationTest
     @patient = Patient.create(given: 'Foo')
     @lab_result = LabResult.create(code: '94508-9', status: 'amended', result: '260385009', effective: Time.zone.now,
                                    patient: @patient)
+
     assert_valid @lab_result
   end
 
   test 'should get new' do
     get new_patient_lab_result_url(@patient)
+
     assert_response :success
   end
 
@@ -30,6 +32,7 @@ class LabResultsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should show lab_result' do
     get fhir_observation_url(@lab_result, format: :fhir_json)
+
     assert_fhir(response.body, type: FHIR::Observation)
     assert_response :success
   end
@@ -49,6 +52,7 @@ class LabResultsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get edit' do
     get edit_patient_lab_result_path(@patient, @lab_result)
+
     assert_response :success
   end
 
@@ -56,6 +60,7 @@ class LabResultsControllerTest < ActionDispatch::IntegrationTest
     patch patient_lab_result_url(@patient, @lab_result),
           params: { lab_result: { code: @lab_result.code, status: @lab_result.status, effective: @lab_result.effective,
                                   result: @lab_result.result, patient: @lab_result.patient } }
+
     assert_redirected_to patient_path(@patient)
   end
 
@@ -63,6 +68,7 @@ class LabResultsControllerTest < ActionDispatch::IntegrationTest
     patch patient_lab_result_url(@patient, @lab_result),
           params: { lab_result: { code: nil, status: nil, effective: nil,
                                   result: nil } }
+
     assert_response :unprocessable_entity
   end
 

@@ -30,6 +30,7 @@ class VerifierTest < ActiveSupport::TestCase
   test 'Verifier exports public keys as JWK' do
     verifier = HealthCards::Verifier.new(keys: @private_key)
     key_set = verifier.keys
+
     assert key_set.is_a? HealthCards::KeySet
   end
 
@@ -37,33 +38,41 @@ class VerifierTest < ActiveSupport::TestCase
 
   test 'Verifier allows public keys to be added' do
     verifier = HealthCards::Verifier.new
+
     assert_empty verifier.keys
     verifier.add_keys @public_key
+
     assert_not_empty verifier.keys
     assert_includes verifier.keys, @public_key
   end
 
   test 'Verifier allows public keys to be removed' do
     verifier = HealthCards::Verifier.new(keys: @public_key)
+
     assert_not_empty verifier.keys
     assert_includes verifier.keys, @public_key
     verifier.remove_keys @public_key
+
     assert_empty verifier.keys
   end
 
   test 'Verifier allows private keys to be added' do
     verifier = HealthCards::Verifier.new
+
     assert_empty verifier.keys
     verifier.add_keys @private_key
+
     assert_not_empty verifier.keys
     assert_includes verifier.keys, @private_key
   end
 
   test 'Verifier allows private keys to be removed' do
     verifier = HealthCards::Verifier.new(keys: @private_key)
+
     assert_not_empty verifier.keys
     assert_includes verifier.keys, @private_key
     verifier.remove_keys @private_key
+
     assert_empty verifier.keys
   end
 
@@ -79,6 +88,7 @@ class VerifierTest < ActiveSupport::TestCase
 
   test 'Verifier can verify a HealthCard' do
     card = HealthCards::HealthCard.new(@jws)
+
     assert @verifier.verify(card)
   end
 
@@ -103,6 +113,7 @@ class VerifierTest < ActiveSupport::TestCase
   test 'Verifier can verify JWS when key is resolvable' do
     stub_request(:get, /jwks.json/).to_return(body: @verifier.keys.to_jwk)
     verifier = HealthCards::Verifier.new
+
     assert verifier.verify(@jws)
   end
 
@@ -119,19 +130,22 @@ class VerifierTest < ActiveSupport::TestCase
   test 'Verifier class can verify health cards when key is resolvable' do
     stub_request(:get, /jwks.json/).to_return(body: @verifier.keys.to_jwk)
     verifier = HealthCards::Verifier
+
     assert verifier.verify(@jws)
   end
 
   ## Key Resolution
 
   test 'Verifier key resolution is active by default' do
-    assert HealthCards::Verifier.new.resolve_keys?
+    assert_predicate HealthCards::Verifier.new, :resolve_keys?
   end
 
   test 'Verifier key resolution can be disabled' do
     verifier = HealthCards::Verifier.new
-    assert verifier.resolve_keys?
+
+    assert_predicate verifier, :resolve_keys?
     verifier.resolve_keys = false
+
     assert_not verifier.resolve_keys?
     verifier.resolve_keys = true
   end
@@ -144,6 +158,7 @@ class VerifierTest < ActiveSupport::TestCase
       verifier.verify(@jws)
     end
     verifier.resolve_keys = true
+
     assert verifier.verify(@jws)
   end
 
@@ -166,18 +181,19 @@ class VerifierTest < ActiveSupport::TestCase
   test 'Verifier class will verify health cards when key is resolvable' do
     stub_request(:get, /jwks.json/).to_return(status: 200, body: @verifier.keys.to_jwk)
     verifier = HealthCards::Verifier
+
     assert verifier.verify(@jws)
   end
 
   ## Test Against Spec Examples
   test 'Against Example Data' do
-    jws = 'eyJ6aXAiOiJERUYiLCJhbGciOiJFUzI1NiIsImtpZCI6IjNLZmRnLVh3UC03Z1h5eXd0VWZVQUR3QnVtRE9QS01ReC1pRUxMMTFXOXMifQ.'\
-          '3ZJLb9swEIT_SrC9ypKo1HWsW5wCfRyKAk17KXygqbXFgA-BpIS4gf57d2kHaIE4p56q24rDjzNDPoGOEVroUxpiW1XRypB6lCb1pZKhixU'\
-          '-SjsYjBUJRwxQgNvtoRXvmvp6vbxeinJ1c1PApKB9gnQcENqfl3FvTsOCB0Jd1mlrR6d_yaS9e1Wo_KQ7sYZtASpghy5pab6NuwdUiS3tex'\
-          '1-YIjMaeFtWZeCePx3M7rOIGsCRj8GhffZPpwXinMcUN4Yop2c0AHhSBmJPBrzPRgSPO9vaxI8Dy-Av1Ic2s8dSosniLTaEA9uHWlCzGcc9'\
-          'ISOe_zse543JWxnCrjTFP69TMwS66VY1GLR1DDPxYtuxOtuPv1dcUwyjTHH5QtPyBc0SaW0wzvfZYLynXaHbDweY0J7fjp0M71ZlT4cKm62'\
-          'irqr1PRIAJV3QlOvYN7OBQznCrKdPQZ07O3PBknklRpDXuKw99qeEE0OXHMsqmrvg6X3yF6kSj4wstNxMDLXubm7-oAOgzRXH30cdJKGiqI'\
-          'SjU9fRrvjrVDnT1xssPkvG2zW_7rBFS_M9P0G.jLfaCb4OaneXDv1p9U29fcWGRkgWnMYizLrRAN_uOsdNRlY5m5Jcot-KHxV1fKjAyCj2D'\
+    jws = 'eyJ6aXAiOiJERUYiLCJhbGciOiJFUzI1NiIsImtpZCI6IjNLZmRnLVh3UC03Z1h5eXd0VWZVQUR3QnVtRE9QS01ReC1pRUxMMTFXOXMifQ.' \
+          '3ZJLb9swEIT_SrC9ypKo1HWsW5wCfRyKAk17KXygqbXFgA-BpIS4gf57d2kHaIE4p56q24rDjzNDPoGOEVroUxpiW1XRypB6lCb1pZKhixU' \
+          '-SjsYjBUJRwxQgNvtoRXvmvp6vbxeinJ1c1PApKB9gnQcENqfl3FvTsOCB0Jd1mlrR6d_yaS9e1Wo_KQ7sYZtASpghy5pab6NuwdUiS3tex' \
+          '1-YIjMaeFtWZeCePx3M7rOIGsCRj8GhffZPpwXinMcUN4Yop2c0AHhSBmJPBrzPRgSPO9vaxI8Dy-Av1Ic2s8dSosniLTaEA9uHWlCzGcc9' \
+          'ISOe_zse543JWxnCrjTFP69TMwS66VY1GLR1DDPxYtuxOtuPv1dcUwyjTHH5QtPyBc0SaW0wzvfZYLynXaHbDweY0J7fjp0M71ZlT4cKm62' \
+          'irqr1PRIAJV3QlOvYN7OBQznCrKdPQZ07O3PBknklRpDXuKw99qeEE0OXHMsqmrvg6X3yF6kSj4wstNxMDLXubm7-oAOgzRXH30cdJKGiqI' \
+          'SjU9fRrvjrVDnT1xssPkvG2zW_7rBFS_M9P0G.jLfaCb4OaneXDv1p9U29fcWGRkgWnMYizLrRAN_uOsdNRlY5m5Jcot-KHxV1fKjAyCj2D' \
           'dmdrze8VbqfY8hoHg'
 
     jwk = {
@@ -189,6 +205,7 @@ class VerifierTest < ActiveSupport::TestCase
       x: '11XvRWy1I2S0EyJlyf_bWfw_TQ5CJJNLw78bHXNxcgw',
       y: 'eZXwxvO1hvCY0KucrPfKo7yAyMT6Ajc3N7OkAB6VYy8'
     }
+
     assert HealthCards::Verifier.new(keys: HealthCards::Key.from_jwk(jwk)).verify(jws)
   end
 end

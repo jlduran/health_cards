@@ -9,6 +9,7 @@ class ImmunizationsTest < ApplicationSystemTestCase
 
   test 'visiting the index' do
     visit immunizations_url
+
     assert_selector 'h1', text: 'Immunizations'
   end
 

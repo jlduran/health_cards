@@ -7,11 +7,13 @@ class ImmunizationsControllerTest < ActionDispatch::IntegrationTest
     @patient = Patient.create(given: 'Foo')
     @vaccine = Vaccine.create(code: 'a', name: 'b')
     @immunization = @patient.immunizations.create(vaccine: @vaccine, occurrence: Time.zone.today)
+
     assert_valid @immunization
   end
 
   test 'should get new' do
     get new_patient_immunization_url(@patient)
+
     assert_response :success
   end
 
@@ -27,6 +29,7 @@ class ImmunizationsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should show immunization' do
     get fhir_immunization_url(@immunization, format: :fhir_json)
+
     assert_fhir(response.body, type: FHIR::Immunization)
     assert_response :success
   end
@@ -46,6 +49,7 @@ class ImmunizationsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get edit' do
     get edit_patient_immunization_path(@patient, @immunization)
+
     assert_response :success
   end
 
@@ -53,12 +57,14 @@ class ImmunizationsControllerTest < ActionDispatch::IntegrationTest
     patch patient_immunization_url(@patient, @immunization),
           params: { immunization: { lot_number: @immunization.lot_number, occurrence: @immunization.occurrence,
                                     patient: @immunization.patient, vaccine: @immunization.vaccine } }
+
     assert_redirected_to patient_path(@patient)
   end
 
   test 'should not update immunization' do
     patch patient_immunization_url(@patient, @immunization),
           params: { immunization: { lot_number: nil, occurrence: nil } }
+
     assert_response :unprocessable_entity
   end
 

@@ -19,6 +19,7 @@ class JWSTest < ActiveSupport::TestCase
     old_sig = jws.signature
     jws.key = HealthCards::PrivateKey.generate_key
     new_sig = jws.signature
+
     assert_not_equal old_sig, new_sig
   end
 
@@ -27,6 +28,7 @@ class JWSTest < ActiveSupport::TestCase
     old_sig = jws.signature
     jws.payload = 'bar'
     new_sig = jws.signature
+
     assert_not_equal old_sig, new_sig
   end
 end

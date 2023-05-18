@@ -27,11 +27,13 @@ class MonkeypoxPayloadTest < ActiveSupport::TestCase
   test 'includes required credential attributes in hash' do
     hash = @card.to_hash
     type = hash.dig(:vc, :type)
+
     assert_not_nil type
     assert_includes type, 'https://smarthealth.cards#health-card'
     assert_includes type, 'https://smarthealth.cards#monkeypox'
 
     fhir_version = hash.dig(:vc, :credentialSubject, :fhirVersion)
+
     assert_not_nil fhir_version
     assert_equal HealthCards::MonkeypoxPayload.fhir_version, fhir_version
   end
@@ -39,12 +41,14 @@ class MonkeypoxPayloadTest < ActiveSupport::TestCase
   test 'bundle creation' do
     @card = rails_issuer.issue_health_card(@bundle, type: HealthCards::MonkeypoxPayload)
     bundle = @card.bundle
+
     assert_equal 3, bundle.entry.size
     assert_equal 'collection', bundle.type
 
     patient = bundle.entry[0].resource
+
     assert_equal FHIR::Patient, patient.class
-    assert patient.valid?
+    assert_predicate patient, :valid?
 
     bundle.entry[1..3].map(&:resource).each do |imm|
       assert_equal FHIR::Immunization, imm.class
@@ -66,6 +70,7 @@ class MonkeypoxPayloadTest < ActiveSupport::TestCase
 
   test 'minified patient entries' do
     bundle = @card.strip_fhir_bundle
+
     assert_equal 3, bundle.entry.size
     patient = bundle.entry[0].resource
 

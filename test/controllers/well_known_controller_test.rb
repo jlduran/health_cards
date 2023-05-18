@@ -15,15 +15,18 @@ class WellKnownControllerTest < ActionDispatch::IntegrationTest
 
   test 'supports health cards' do
     get(well_known_smart_url, headers: @headers)
+
     assert_response :success
 
     config = JSON.parse(response.body)
+
     assert response['Access-Control-Allow-Origin'], '*'
     assert_equal @well_known, config.symbolize_keys
   end
 
   test 'supports jwks' do
     get(well_known_jwks_url, headers: @headers)
+
     assert_response :success
 
     json = JSON.parse(response.body)

@@ -46,6 +46,7 @@ class QRCodesControllerTest < ActionDispatch::IntegrationTest
     assert_nothing_raised do
       ChunkyPNG::Image.from_blob(response.body)
     end
+
     assert_response :success
   end
 
@@ -54,16 +55,20 @@ class QRCodesControllerTest < ActionDispatch::IntegrationTest
     100.times { @patient.immunizations.create(vaccine: vax.sample, occurrence: rand(5.years).seconds.ago) }
     get(patient_qr_code_path(@patient, 1, format: :png))
     jws1 = session[:jws]
+
     assert_not_nil jws1
     qr = HealthCards::QRCodes.from_jws(jws1).code_by_ordinal(1).data
+
     assert_response :success
 
     response1 = response.body
 
     get(patient_qr_code_path(@patient, 2, format: :png))
     jws2 = session[:jws]
+
     assert_not_nil jws2
     qr2 = HealthCards::QRCodes.from_jws(jws2).code_by_ordinal(2).data
+
     assert_response :success
 
     response2 = response.body
@@ -81,6 +86,7 @@ class QRCodesControllerTest < ActionDispatch::IntegrationTest
     assert_raises ChunkyPNG::SignatureMismatch do
       ChunkyPNG::Image.from_blob(response.body)
     end
+
     assert_response :not_found
   end
 end

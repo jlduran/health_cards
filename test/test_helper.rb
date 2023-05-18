@@ -27,6 +27,7 @@ module ActiveSupport
 
     def assert_valid(model)
       model.validate
+
       assert_empty model.errors, model.errors.full_messages.join(', ')
     end
 
@@ -77,7 +78,7 @@ module ActiveSupport
     def assert_fhir(obj, type: nil, validate: true)
       output = FHIR.from_contents(obj)
       assert output.is_a?(type) if type
-      assert output.valid?, output.validate if validate
+      assert_predicate output, :valid?, output.validate if validate
       output
     end
 
@@ -104,7 +105,8 @@ module ActiveSupport
       entries = card.bundle.entry
 
       patient = entries[0].resource
-      assert patient.valid?
+
+      assert_predicate patient, :valid?
       assert_equal patient_entry.given, patient.name[0].given[0]
 
       imm = entries[1].resource

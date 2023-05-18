@@ -6,6 +6,12 @@ class ImmunizationsController < SecuredController
   before_action :set_immunization, only: %i[edit update destroy]
   before_action :find_vaccines, only: %i[new edit create update]
 
+  def show
+    @immunization = Immunization.find(params[:id])
+
+    render json: @immunization.to_json
+  end
+
   # GET /immunizations/new
   def new
     @immunization = Immunization.new
@@ -28,12 +34,6 @@ class ImmunizationsController < SecuredController
         format.json { render json: @immunization.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def show
-    @immunization = Immunization.find(params[:id])
-
-    render json: @immunization.to_json
   end
 
   # PATCH/PUT /immunizations/1 or /immunizations/1.json

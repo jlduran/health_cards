@@ -27,6 +27,7 @@ class QrCodesTest < ActiveSupport::TestCase
     codes.chunks.each.with_index(1) do |ch, i|
       # ch.image.save("test/fixtures/files/qr/#{i}.png") For use when qr code images need to be updated
       image = ChunkyPNG::Image.from_file("test/fixtures/files/qr/#{i}.png")
+
       assert_equal image, ch.image
     end
   end

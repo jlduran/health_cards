@@ -20,13 +20,15 @@ class PrivateKeyTest < Minitest::Test
 
   def test_signing_payloads
     # Examples from https://datatracker.ietf.org/doc/html/rfc7515#appendix-A.3.1
-    payload = 'eyJhbGciOiJFUzI1NiJ9.eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19'\
+    payload = 'eyJhbGciOiJFUzI1NiJ9.eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19' \
               'yb290Ijp0cnVlfQ'
     signature = @key.sign(payload)
+
     assert @key.public_key.verify(payload, signature)
 
     public_jwk = @jwk.reject { |k, _v| k == :d }
     jwk_public_key = HealthCards::Key.from_jwk(public_jwk)
+
     assert jwk_public_key.is_a? HealthCards::PublicKey
     assert jwk_public_key.verify(payload, signature)
   end

@@ -11,6 +11,7 @@ class HealthCardTest < ActiveSupport::TestCase
   test 'json' do
     credential = JSON.parse(@card.to_json)
     vc = credential['verifiableCredential'][0]
+
     assert_equal @jws, vc
   end
 
@@ -20,11 +21,13 @@ class HealthCardTest < ActiveSupport::TestCase
 
   test 'resource w/type' do
     patient = @card.resource(type: FHIR::Patient)
+
     assert_equal FHIR::Patient, patient.class
   end
 
   test 'resources w/type' do
     imms = @card.resources(type: FHIR::Immunization)
+
     assert_equal 2, imms.length
     imms.each do |i|
       assert_equal FHIR::Immunization, i.class
@@ -34,12 +37,14 @@ class HealthCardTest < ActiveSupport::TestCase
   test 'resource w/type and rules' do
     lot = 'Lot #0000001'
     imms = @card.resources(type: FHIR::Immunization) { |i| i.lotNumber == lot }
+
     assert_equal 1, imms.length
     assert_equal lot, imms.first.lotNumber
   end
 
   test 'only rules' do
     resources = @card.resources { |r| !r.id.nil? }
+
     assert_equal 0, resources.length
   end
 end

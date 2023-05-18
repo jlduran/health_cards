@@ -4,13 +4,18 @@ class LabResultsController < ApplicationController
   before_action :find_patient, except: :show
   before_action :set_lab_result, only: %i[index edit update destroy]
 
+  def index; end
+
+  def show
+    @lab_result = LabResult.find(params[:id])
+    render json: @lab_result.to_json
+  end
+
   def new
     @lab_result = LabResult.new
   end
 
   def edit; end
-
-  def index; end
 
   def create
     @lab_result = LabResult.new(lab_result_params)
@@ -25,11 +30,6 @@ class LabResultsController < ApplicationController
         format.json { render json: @lab_result.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def show
-    @lab_result = LabResult.find(params[:id])
-    render json: @lab_result.to_json
   end
 
   def update

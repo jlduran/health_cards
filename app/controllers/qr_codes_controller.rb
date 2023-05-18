@@ -3,13 +3,6 @@
 class QRCodesController < ApplicationController
   before_action :find_patient, only: :show
 
-  def new; end
-
-  def create
-    contents = JSON.parse(params[:qr_contents])
-    @scan_result = HealthCards::Importer.scan(contents)
-  end
-
   def show
     respond_to do |format|
       format.png do
@@ -20,5 +13,12 @@ class QRCodesController < ApplicationController
         send_data code.image.to_s, type: 'image/png', disposition: 'inline'
       end
     end
+  end
+
+  def new; end
+
+  def create
+    contents = JSON.parse(params[:qr_contents])
+    @scan_result = HealthCards::Importer.scan(contents)
   end
 end

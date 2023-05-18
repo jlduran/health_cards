@@ -46,6 +46,7 @@ class PayloadTest < ActiveSupport::TestCase
   test 'Payload can be created from a JWS' do
     jws_string = load_json_fixture('example-jws')
     card = HealthCards::HealthCard.new(jws_string)
+
     assert_not_nil card.bundle
     assert card.bundle.is_a?(FHIR::Bundle)
   end
@@ -71,6 +72,7 @@ class PayloadTest < ActiveSupport::TestCase
     assert hash['nbf'] >= Time.now.to_i
 
     type = hash.dig('vc', 'type')
+
     assert_not_nil type
     assert_includes type, 'https://smarthealth.cards#health-card'
     bundle = hash.dig('vc', 'credentialSubject', 'fhirBundle')
@@ -88,6 +90,7 @@ class PayloadTest < ActiveSupport::TestCase
     assert_not_nil bundle
     assert_not_nil bundle['entry']
     resources = bundle['entry'].map { |e| e['resource'] }
+
     assert_not_nil resources[0]['telecom']
     assert_not_nil resources[1].dig('code', 'coding')[0]['display']
     assert_not_nil resources[2].dig('code', 'text')
@@ -101,11 +104,13 @@ class PayloadTest < ActiveSupport::TestCase
     new_entries.each do |resource|
       url = resource.fullUrl
       resource, num = url.split(':')
+
       assert_equal('resource', resource)
       resource_nums.push(num)
     end
 
     inc_array = Array.new(new_entries.length, &:to_s)
+
     assert_equal(resource_nums, inc_array)
   end
 
@@ -113,11 +118,13 @@ class PayloadTest < ActiveSupport::TestCase
     original_json = @health_card.to_json
     @health_card.strip_fhir_bundle
     original_json2 = @health_card.to_json
+
     assert_equal original_json, original_json2
   end
 
   test 'do not strip name.text elements' do
     stripped_bundle = @health_card.strip_fhir_bundle
+
     assert_not_nil stripped_bundle.entry[0].resource.name[0].text
   end
 
@@ -127,6 +134,7 @@ class PayloadTest < ActiveSupport::TestCase
 
     stripped_entries.each do |entry|
       resource = entry.resource
+
       assert_not(resource.id, "#{resource} has id")
       assert_not(resource.text, "#{resource} has text")
       meta = resource.meta
@@ -186,6 +194,7 @@ class PayloadTest < ActiveSupport::TestCase
   test 'compress_payload applies a raw deflate compression and allows for the original payload to be restored' do
     original_hc = HealthCards::Payload.new(issuer: @issuer, bundle: FHIR::Bundle.new)
     new_hc = HealthCards::Payload.from_payload(original_hc.to_s)
+
     assert_equal original_hc.to_hash, new_hc.to_hash
   end
 end

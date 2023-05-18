@@ -29,11 +29,13 @@ class HealthCardsControllerTest < ActionDispatch::IntegrationTest
 
   test 'create health card PDF' do
     get(patient_health_card_path(@patient, format: 'pdf'))
+
     assert_response :success
   end
 
   test 'should show health card' do
     get(patient_health_card_url(@patient, format: :html))
+
     assert_response :success
   end
 
@@ -41,6 +43,7 @@ class HealthCardsControllerTest < ActionDispatch::IntegrationTest
     stub_request(:get, 'https://smarthealth.cards/examples/issuer/.well-known/jwks.json').to_return(body: '{"keys":[]}')
     file = fixture_file_upload('test/fixtures/files/example-00-e-file.smart-health-card')
     post(upload_health_cards_path, params: { health_card: file })
+
     assert_response :success
   end
 
@@ -49,6 +52,7 @@ class HealthCardsControllerTest < ActionDispatch::IntegrationTest
                                                                                                     status: 404)
     file = fixture_file_upload('test/fixtures/files/example-00-e-file.smart-health-card')
     post(upload_health_cards_path, params: { health_card: file })
+
     assert_response :success
   end
 
@@ -56,6 +60,7 @@ class HealthCardsControllerTest < ActionDispatch::IntegrationTest
     stub_request(:get, 'https://smarthealth.cards/examples/issuer/.well-known/jwks.json').to_timeout
     file = fixture_file_upload('test/fixtures/files/example-00-e-file.smart-health-card')
     post(upload_health_cards_path, params: { health_card: file })
+
     assert_response :success
   end
 
@@ -74,6 +79,7 @@ class HealthCardsControllerTest < ActionDispatch::IntegrationTest
 
     jws = HealthCards::JWS.from_jws(cred.valueString)
     jws.public_key = rails_issuer.key.public_key
+
     assert jws.verify
 
     # TODO: The spec currently requires references that are invalid
@@ -82,17 +88,20 @@ class HealthCardsControllerTest < ActionDispatch::IntegrationTest
     # assert imm.valid?, imm.validate
 
     card = HealthCards::COVIDPayload.from_payload(jws.payload)
+
     assert card.bundle.entry[0].resource.is_a?(FHIR::Patient)
     assert card.bundle.entry[1].resource.is_a?(FHIR::Immunization)
   end
 
   test 'should return OperationOutcome when no patient exists for $issue endpoint' do
     post issue_vc_path(patient_id: 1234, format: :fhir_json)
+
     assert_operation_outcome(response)
   end
 
   test 'should return OperationOutcome when no patient exists for $issue endpoint with accept header' do
     post issue_vc_path(patient_id: 1234), headers: { Accept: 'application/fhir+json' }
+
     assert_operation_outcome(response)
   end
 
@@ -119,6 +128,7 @@ class HealthCardsControllerTest < ActionDispatch::IntegrationTest
     post(@fhir_url, params: params.to_hash, as: :json)
 
     output = assert_fhir(response.body, type: FHIR::Parameters)
+
     assert_empty output.parameter
   end
 end
