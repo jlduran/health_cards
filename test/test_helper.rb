@@ -32,7 +32,7 @@ module ActiveSupport
     end
 
     def cleanup_keys
-      FileUtils.rm_rf rails_key_path if File.exist?(rails_key_path)
+      FileUtils.rm_rf rails_key_path
     end
 
     def rails_key_path

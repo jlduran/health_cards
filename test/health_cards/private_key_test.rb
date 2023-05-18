@@ -26,7 +26,7 @@ class PrivateKeyTest < Minitest::Test
 
     assert @key.public_key.verify(payload, signature)
 
-    public_jwk = @jwk.reject { |k, _v| k == :d }
+    public_jwk = @jwk.except(:d)
     jwk_public_key = HealthCards::Key.from_jwk(public_jwk)
 
     assert jwk_public_key.is_a? HealthCards::PublicKey

@@ -5,7 +5,7 @@ require 'health_cards/chunking_utils'
 
 JWS_SMALL = 's' * 1195
 JWS_LARGE = 'l' * 1196
-JWS_3 = "#{'t' * 1191 * 2}t"
+JWS_3 = "#{'t' * 1191 * 2}t".freeze
 
 FILEPATH_NUMERIC_QR_CODE = 'example-numeric-qr-code'
 FILEPATH_NUMERIC_QR_CODE_MULTIPLE = 'example-numeric-qr-code-multiple'

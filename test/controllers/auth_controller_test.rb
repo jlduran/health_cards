@@ -15,7 +15,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
                         redirect_uri: 'http://example.com' }
 
   test 'authorize without client_id should return 400 invalid_request' do
-    get(auth_code_path, params: good_auth_params.reject { |k, _v| k == :client_id })
+    get(auth_code_path, params: good_auth_params.except(:client_id))
 
     assert_response :bad_request
     assert_equal('{"error":"invalid_request"}', @response.body)
@@ -45,21 +45,21 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'token with missing client_id parameter should return 400 invalid_request' do
-    post(auth_token_path, params: good_token_params.reject { |k, _v| k == :client_id })
+    post(auth_token_path, params: good_token_params.except(:client_id))
 
     assert_response :bad_request
     assert_equal('{"error":"invalid_request"}', @response.body)
   end
 
   test 'token with missing code parameter should return 400 invalid_request' do
-    post(auth_token_path, params: good_token_params.reject { |k, _v| k == :code })
+    post(auth_token_path, params: good_token_params.except(:code))
 
     assert_response :bad_request
     assert_equal('{"error":"invalid_request"}', @response.body)
   end
 
   test 'token with missing grant type should return 400 invalid_request' do
-    post(auth_token_path, params: good_token_params.reject { |k, _v| k == :grant_type })
+    post(auth_token_path, params: good_token_params.except(:grant_type))
 
     assert_response :bad_request
     assert_equal('{"error":"invalid_request"}', @response.body)

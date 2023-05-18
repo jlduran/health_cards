@@ -13,7 +13,6 @@ class LabResult < FHIRRecord
   STATUS = %w[final amended corrected].freeze
 
   validates :effective, presence: true
-  validates :patient, presence: true
   validates :code, inclusion: { in: ValueSet::LAB_CODES.code_values, message: 'is not a valid lab code' }
   validates :result, inclusion: { in: ValueSet::RESULTS.code_values, message: 'is not a valid lab result' }
   validates :status, inclusion: { in: STATUS, message: 'is not a valid status' }

@@ -89,7 +89,7 @@ class PayloadTest < ActiveSupport::TestCase
 
     assert_not_nil bundle
     assert_not_nil bundle['entry']
-    resources = bundle['entry'].map { |e| e['resource'] }
+    resources = bundle['entry'].pluck('resource')
 
     assert_not_nil resources[0]['telecom']
     assert_not_nil resources[1].dig('code', 'coding')[0]['display']

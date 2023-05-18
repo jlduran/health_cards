@@ -14,8 +14,6 @@ class Immunization < FHIRRecord
   serialize :json, FHIR::Immunization
 
   validates :occurrence, presence: true
-  validates :vaccine, presence: true
-  validates :patient, presence: true
 
   after_initialize do
     json.status ||= 'completed'

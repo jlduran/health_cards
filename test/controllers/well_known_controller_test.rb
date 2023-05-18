@@ -18,7 +18,7 @@ class WellKnownControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    config = JSON.parse(response.body)
+    config = response.parsed_body
 
     assert response['Access-Control-Allow-Origin'], '*'
     assert_equal @well_known, config.symbolize_keys
@@ -29,7 +29,7 @@ class WellKnownControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    json = JSON.parse(response.body)
+    json = response.parsed_body
 
     assert_equal 1, json['keys'].length
     response_key = json['keys'].first
