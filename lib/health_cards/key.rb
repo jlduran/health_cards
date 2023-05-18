@@ -88,7 +88,7 @@ module HealthCards
     end
 
     def self.openssl_3?
-      OpenSSL::OPENSSL_VERSION_NUMBER >= 3 * 0x10000000
+      3 * 0x10000000 <= OpenSSL::OPENSSL_VERSION_NUMBER
     end
 
     def initialize(ec_key)

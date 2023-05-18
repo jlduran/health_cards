@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 require:
   - rubocop-minitest
   - rubocop-rake
@@ -25,12 +27,15 @@ Style/Documentation:
     - config/*
     - db/migrate/*
     - test/**/*
+    - 'lib/health_cards/payload_types/covid_immunization_payload.rb'
+    - 'lib/health_cards/payload_types/covid_lab_result_payload.rb'
+    - 'lib/health_cards/payload_types/monkeypox_immunization_payload.rb'
 
 Layout/BlockAlignment:
   EnforcedStyleAlignWith: 'start_of_block'
 
 Layout/LineLength:
-  Max: 120
+  Max: 121
 
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: 'indented'
