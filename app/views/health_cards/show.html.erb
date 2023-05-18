@@ -2,7 +2,7 @@
 <section class="hero is-small is-info">
   <div class="hero-body">
     <p class="title">
-      <%= link_to patient_path(@patient), 'aria-label': 'Back to patient page' do%>
+      <%= link_to patient_path(@patient), 'aria-label': 'Back to patient page' do %>
         <i class="fa fa-caret-left"></i>
       <% end %>
       Health Card Details
@@ -77,8 +77,8 @@
       </header>
         <div class="card-content">
           <pre style="white-space:pre-wrap;">
-            <div class="content", style="word-wrap: break-word; width: 800px">
-                <p> <%= @health_card.jws %> </p>
+            <div class="content" style="word-wrap: break-word; width: 800px">
+              <p> <%= @health_card.jws %> </p>
             </div>
           </pre>
         </div>
@@ -95,7 +95,7 @@
       </header>
         <div class="card-content">
           <pre style="white-space:pre-wrap;">
-            <div class="content", style="word-wrap: break-word; width: 800px">
+            <div class="content" style="word-wrap: break-word; width: 800px">
                 <% @health_card.qr_codes.each do |ch| %>
                 <p> <%= ch.data %> </p>
                 <% end %>

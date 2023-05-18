@@ -3,10 +3,10 @@
     <% if current_page? new_patient_path %>
       <div class="block">
         <%= button_to 'Demo Data',
-        new_patient_path,
-        params: fake_patient_params,
-        method: :get,
-        class: 'button is-info is-light'
+          new_patient_path,
+          params: fake_patient_params,
+          method: :get,
+          class: 'button is-info is-light'
         %>
       </div>
     <% end %>
@@ -28,7 +28,7 @@
       <div class="field">
         <%= form.label :given, 'Given Name', class: 'label' %>
         <div class="control">
-          <%= form.text_field :given, class: 'input'%>
+          <%= form.text_field :given, class: 'input' %>
         </div>
       </div>
 
@@ -43,7 +43,7 @@
         <%= form.label :gender, class: 'label' %>
         <div class="control">
           <div class="select">
-            <%= form.select :gender, options_for_select(Patient::GENDERS, @patient.gender)  %>
+            <%= form.select :gender, options_for_select(Patient::GENDERS, @patient.gender) %>
           </div>
         </div>
       </div>
@@ -52,13 +52,13 @@
         <%= form.label :birth_date, "Date of Birth", class: 'label' %>
         <div class="control">
           <%= form.text_field :birth_date,
-           class: 'input',
-           placeholder: 'mm/dd/yyyy',
-           value: format_date(patient.birth_date),
-           pattern: '^(1[0-2]|0?[1-9])/(3[01]|[12][0-9]|0?[1-9])/(?:[0-9]{2})?[0-9]{2}$',
-           title: 'mm/dd/yyyy',
-           oninvalid: 'this.setCustomValidity("Enter date in mm/dd/yyyy format")',
-           oninput: 'this.setCustomValidity("")'
+            class: 'input',
+            placeholder: 'mm/dd/yyyy',
+            value: format_date(patient.birth_date),
+            pattern: '^(1[0-2]|0?[1-9])/(3[01]|[12][0-9]|0?[1-9])/(?:[0-9]{2})?[0-9]{2}$',
+            title: 'mm/dd/yyyy',
+            oninvalid: 'this.setCustomValidity("Enter date in mm/dd/yyyy format")',
+            oninput: 'this.setCustomValidity("")'
           %>
         </div>
       </div>
@@ -94,8 +94,6 @@
         <%= form.label :zip_code, class: "label" %>
         <%= form.text_field :zip_code, class: "input" %>
       </div>
-
-
 
       <div class="field is-grouped">
         <div class="control">

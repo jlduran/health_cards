@@ -18,18 +18,17 @@ default: &default
       use: in
       min: 0
       max: '*'
-      type: string  
+      type: string
     - name: _since
       use: in
       min: 0
       max: 1
-      type: datetime 
+      type: datetime
     - name: verifiableCredential
       use: out
       min: 0
       max: 1
-      type: string                               
-
+      type: string
 
 development:
   <<: *default

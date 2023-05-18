@@ -18,14 +18,14 @@
   <tbody>
     <% @patient.lab_results.each do |lr| %>
       <tr>
-	<td><%= lr.patient %></td>
-	<td><%= lr.code %></td>
-  <td><%= lr.result %></td>
-	<td><%= lr.effective %></td>
-	<td><%= lr.status %></td>
-	<td><%= link_to 'Show', lr %></td>
-	<td><%= link_to 'Edit', edit_patient_lab_result_path(lr) %></td>
-	<td><%= link_to 'Destroy', lr, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= lr.patient %></td>
+        <td><%= lr.code %></td>
+        <td><%= lr.result %></td>
+        <td><%= lr.effective %></td>
+        <td><%= lr.status %></td>
+        <td><%= link_to 'Show', lr %></td>
+        <td><%= link_to 'Edit', edit_patient_lab_result_path(lr) %></td>
+        <td><%= link_to 'Destroy', lr, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

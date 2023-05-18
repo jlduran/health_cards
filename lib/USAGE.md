@@ -15,7 +15,7 @@ issuer = HealthCards::Issuer.new(key: key)
 health_card = issuer.issue_health_card(FHIR::Bundle.new)
 covid_health_card = issuer.issue_health_card(FHIR::Bundle.new, type: HealthCards::COVIDPayload)
 
-# Create JWS with the Issuer. 
+# Create JWS with the Issuer.
 
 jws = issuer.issue_jws(FHIR::Bundle.new)
 ```
@@ -95,7 +95,7 @@ health_card.verify
 
 ### Custom Health Cards
 
-An application might want to issue specific types of Health Cards. 
+An application might want to issue specific types of Health Cards.
 Custom `Payload` or `Issuer` class can be created to customize their behavior.
 `Payload` provides hooks for adding functionality to the health card.
 
