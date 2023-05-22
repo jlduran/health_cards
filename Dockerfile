@@ -5,10 +5,10 @@ ENV RAILS_ENV=production
 ENV NODE_ENV=production
 RUN mkdir -p $INSTALL_PATH
 
-# Add -k to disable ssl
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg -o /root/yarn-pubkey.gpg && apt-key add /root/yarn-pubkey.gpg
-RUN echo "deb http://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get install -y --no-install-recommends nodejs yarn
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get update && apt-get install -y --no-install-recommends nodejs
+RUN npm install --global yarn
+RUN apt-get clean
 
 WORKDIR $INSTALL_PATH
 
