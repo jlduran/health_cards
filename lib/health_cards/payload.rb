@@ -17,24 +17,26 @@ module HealthCards
       Binary|BiologicallyDerivedProduct|BodyStructure|Bundle|CapabilityStatement|CarePlan|CareTeam|CatalogEntry|
       ChargeItem|ChargeItemDefinition|Claim|ClaimResponse|ClinicalImpression|CodeSystem|Communication|
       CommunicationRequest|CompartmentDefinition|Composition|ConceptMap|Condition|Consent|Contract|Coverage|
-      CoverageEligibilityRequest|CoverageEligibilityResponse|DetectedIssue|Device|DeviceDefinition|DeviceMetric
-      |DeviceRequest|DeviceUseStatement|DiagnosticReport|DocumentManifest|DocumentReference|EffectEvidenceSynthesis|
-      Encounter|Endpoint|EnrollmentRequest|EnrollmentResponse|EpisodeOfCare|EventDefinition|Evidence|EvidenceVariable|
-      ExampleScenario|ExplanationOfBenefit|FamilyMemberHistory|Flag|Goal|GraphDefinition|Group|GuidanceResponse|
-      HealthcareService|ImagingStudy|Immunization|ImmunizationEvaluation|ImmunizationRecommendation|
-      ImplementationGuide|InsurancePlan|Invoice|Library|Linkage|List|Location|Measure|MeasureReport|Media|Medication|
-      MedicationAdministration|MedicationDispense|MedicationKnowledge|MedicationRequest|MedicationStatement|
-      MedicinalProduct|MedicinalProductAuthorization|MedicinalProductContraindication|MedicinalProductIndication|
-      MedicinalProductIngredient|MedicinalProductInteraction|MedicinalProductManufactured|MedicinalProductPackaged|
+      CoverageEligibilityRequest|CoverageEligibilityResponse|DetectedIssue|Device|DeviceDefinition|DeviceMetric|
+      DeviceRequest|DeviceUseStatement|DiagnosticReport|DocumentManifest|DocumentReference|DomainResource|
+      EffectEvidenceSynthesis|Encounter|Endpoint|EnrollmentRequest|EnrollmentResponse|EpisodeOfCare|EventDefinition|
+      Evidence|EvidenceVariable|ExampleScenario|ExplanationOfBenefit|FamilyMemberHistory|Flag|Goal|GraphDefinition|
+      Group|GuidanceResponse|HealthcareService|ImagingStudy|Immunization|ImmunizationEvaluation|
+      ImmunizationRecommendation|ImplementationGuide|InsurancePlan|Invoice|Library|Linkage|List|Location|Measure|
+      MeasureReport|Media|Medication|MedicationAdministration|MedicationDispense|MedicationKnowledge|
+      MedicationRequest|MedicationStatement|MedicinalProduct|MedicinalProductAuthorization|
+      MedicinalProductContraindication|MedicinalProductIndication|MedicinalProductIngredient|
+      MedicinalProductInteraction|MedicinalProductManufactured|MedicinalProductPackaged|
       MedicinalProductPharmaceutical|MedicinalProductUndesirableEffect|MessageDefinition|MessageHeader|
       MolecularSequence|NamingSystem|NutritionOrder|Observation|ObservationDefinition|OperationDefinition|
-      OperationOutcome|Organization|OrganizationAffiliation|Patient|PaymentNotice|PaymentReconciliation|Person|
-      PlanDefinition|Practitioner|PractitionerRole|Procedure|Provenance|Questionnaire|QuestionnaireResponse|
+      OperationOutcome|Organization|OrganizationAffiliation|Parameters|Patient|PaymentNotice|PaymentReconciliation|
+      Person|PlanDefinition|Practitioner|PractitionerRole|Procedure|Provenance|Questionnaire|QuestionnaireResponse|
       RelatedPerson|RequestGroup|ResearchDefinition|ResearchElementDefinition|ResearchStudy|ResearchSubject|
-      RiskAssessment|RiskEvidenceSynthesis|Schedule|SearchParameter|ServiceRequest|Slot|Specimen|SpecimenDefinition|
-      StructureDefinition|StructureMap|Subscription|Substance|SubstanceNucleicAcid|SubstancePolymer|SubstanceProtein|
-      SubstanceReferenceInformation|SubstanceSourceMaterial|SubstanceSpecification|SupplyDelivery|SupplyRequest|Task|
-      TerminologyCapabilities|TestReport|TestScript|ValueSet|VerificationResult|VisionPrescription)/
+      Resource|RiskAssessment|RiskEvidenceSynthesis|Schedule|SearchParameter|ServiceRequest|Slot|Specimen|
+      SpecimenDefinition|StructureDefinition|StructureMap|Subscription|Substance|SubstanceNucleicAcid|
+      SubstancePolymer|SubstanceProtein|SubstanceReferenceInformation|SubstanceSourceMaterial|
+      SubstanceSpecification|SupplyDelivery|SupplyRequest|Task|TerminologyCapabilities|TestReport|TestScript|
+      ValueSet|VerificationResult|VisionPrescription)/
       [A-Za-z0-9\-.]{1,64}(/_history/[A-Za-z0-9\-.]{1,64})?}x
 
     attr_reader :issuer, :nbf, :bundle
@@ -105,6 +107,7 @@ module HealthCards
     disallow attributes: %w[id text]
     disallow type: FHIR::CodeableConcept, attributes: %w[text]
     disallow type: FHIR::Coding, attributes: %w[display]
+    disallow type: FHIR::DomainResource, attributes: %w[text]
 
     # Create a Payload
     #
@@ -149,7 +152,7 @@ module HealthCards
       to_hash.to_json(*args)
     end
 
-    # Processes the bundle according to https://smarthealth.cards/#health-cards-are-small and returns
+    # Processes the bundle according to https://smarthealth.cards/#health-cards-are-compact and returns
     # a Hash with equivalent values
     # @return [Hash] A hash with the same content as the FHIR::Bundle, processed accoding
     # to SMART Health Cards framework and any constraints created by subclasses
