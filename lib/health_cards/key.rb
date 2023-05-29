@@ -104,7 +104,7 @@ module HealthCards
     end
 
     def to_jwk
-      coordinates.merge(kid: kid, use: 'sig', alg: 'ES256')
+      coordinates.merge(kid: kid, use: 'sig', alg: 'ES256').slice(:kty, :kid, :use, :alg, :crv, :d, :x, :y)
     end
 
     def kid

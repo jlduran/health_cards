@@ -59,7 +59,7 @@ module HealthCards
     private
 
     def jws_header
-      { 'zip' => 'DEF', 'alg' => 'ES256', 'kid' => key.public_key.kid }
+      { 'zip' => 'DEF', 'kid' => key.public_key.kid, 'alg' => 'ES256' }
     end
   end
 end

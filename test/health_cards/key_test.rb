@@ -29,7 +29,7 @@ class KeyTest < ActiveSupport::TestCase
   test 'kid calculation is correct' do
     jwk = HealthCards::Key.from_jwk(@test_jwk)
 
-    assert_equal jwk.kid, @test_jwk[:kid]
+    assert_equal @test_jwk[:kid], jwk.kid
   end
 
   test 'exports to jwk' do
