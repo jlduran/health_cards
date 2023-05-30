@@ -104,7 +104,7 @@ Custom `Payload` or `Issuer` class can be created to customize their behavior.
 class CustomHealthCard < HealthCards::Payload
   fhir_version '4.0.1' # Sets FHIR version
   additional_types 'https://my.custom.cards#type' # Adds additional claim types to those required by SMART Health Cards
-  allow FHIR::Patient, %w[name] # Specify allowed attributes for FHIR resources
+  allow type: FHIR::Patient, %w[name] # Specify allowed attributes for FHIR resources
 end
 ```
 
