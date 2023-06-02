@@ -104,8 +104,9 @@ module HealthCards
 
     allow type: FHIR::Meta, attributes: %w[security]
 
-    disallow attributes: %w[id text]
-    disallow type: FHIR::CodeableConcept, attributes: %w[text]
+    # disallow attributes: %w[id text]
+    # disallow type: FHIR::CodeableConcept, attributes: %w[text]
+    disallow attributes: %w[id]
     disallow type: FHIR::Coding, attributes: %w[display]
     disallow type: FHIR::DomainResource, attributes: %w[text]
 
