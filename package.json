@@ -2,11 +2,11 @@
   "name": "react-app",
   "private": true,
   "dependencies": {
-    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-react": "^7.22.3",
     "@rails/actioncable": "^6.1.7-3",
     "@rails/activestorage": "^6.1.7-3",
     "@rails/ujs": "^6.1.7-3",
-    "@rails/webpacker": "5.4.3",
+    "@rails/webpacker": "^5.4.4",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "prop-types": "^15.8.1",
     "qr-scanner": "^1.4.2",
@@ -20,6 +20,6 @@
   "version": "0.1.0",
   "devDependencies": {
     "file-loader": "^6.2.0",
-    "webpack-dev-server": "^4"
+    "webpack-dev-server": "^3"
   }
 }
