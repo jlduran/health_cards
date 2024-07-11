@@ -38,8 +38,8 @@ jobs:
           bundler-cache: true
       - name: Install js dependencies
         run: yarn install
-      - name: Run webpack
-        run: bin/rake webpacker:install:react
+      - name: Install webpack
+        run: bin/rails webpacker:install
       - name: Run tests
         run: bundle exec rake
 
