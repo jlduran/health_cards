@@ -17,7 +17,7 @@ This Issuer supports the three defined [methods of retrieving a SMART Health Car
 The Verifier supports scanning QR codes.
 
 ### System Requirements
- - Ruby 3.0.6 (prior versions may work but are not tested)
+ - Ruby 3.3.4 (prior versions may work but are not tested)
  - [Bundler](https://bundler.io)
  - [Node.js](https://nodejs.org/en/)
  - [Yarn](https://yarnpkg.com)

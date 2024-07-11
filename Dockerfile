@@ -1,14 +1,12 @@
-FROM ruby:3.0.6
+FROM ruby:3.3.4
 
 ENV INSTALL_PATH=/opt/health_cards/
 ENV RAILS_ENV=production
 ENV NODE_ENV=production
 RUN mkdir -p $INSTALL_PATH
 
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
-RUN apt-get update && apt-get install -y --no-install-recommends nodejs
-RUN npm install --global yarn
-RUN apt-get clean
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+RUN nvm install 20
 
 WORKDIR $INSTALL_PATH
 
