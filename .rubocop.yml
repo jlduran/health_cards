@@ -1,9 +1,10 @@
 inherit_from: .rubocop_todo.yml
 
 require:
+  - rubocop-capybara
   - rubocop-minitest
-  - rubocop-rake
   - rubocop-rails
+  - rubocop-rake
 
 AllCops:
   TargetRubyVersion: 3.0

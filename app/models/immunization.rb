@@ -25,7 +25,7 @@ class Immunization < FHIRRecord
 
   def lot_number=(lnum)
     json.lotNumber = lnum if lnum.present?
-    super(lnum)
+    super
   end
 
   def occurrence
@@ -33,7 +33,7 @@ class Immunization < FHIRRecord
   end
 
   def occurrence=(occ)
-    super(occ)
+    super
     json.occurrenceDateTime = to_fhir_time(attributes['occurrence'])
     attributes['occurrence']
   end
@@ -41,23 +41,23 @@ class Immunization < FHIRRecord
   def patient_id=(pid)
     pat = Patient.find(pid) if pid
     update_patient_reference(pat)
-    super(pid)
+    super
   end
 
   def patient=(pat)
     update_patient_reference(pat)
-    super(pat)
+    super
   end
 
   def vaccine_id=(vid)
     code = Vaccine.find(vid).code
     update_vax_code(code)
-    super(vid)
+    super
   end
 
   def vaccine=(vax)
     update_vax_code(vax.code)
-    super(vax)
+    super
   end
 
   private

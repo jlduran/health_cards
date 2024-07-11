@@ -26,7 +26,7 @@ class LabResult < FHIRRecord
   delegate :status=, to: :json
 
   def effective=(eff)
-    super(eff)
+    super
     json.effectiveDateTime = to_fhir_time(attributes['effective'])
     attributes['effective']
   end
@@ -34,12 +34,12 @@ class LabResult < FHIRRecord
   def patient_id=(pid)
     pat = Patient.find(pid) if pid
     update_patient_reference(pat)
-    super(pid)
+    super
   end
 
   def patient=(pat)
     update_patient_reference(pat)
-    super(pat)
+    super
   end
 
   def result
@@ -48,7 +48,7 @@ class LabResult < FHIRRecord
 
   def result=(labc)
     update_result(labc)
-    super(labc)
+    super
   end
 
   def code
@@ -57,7 +57,7 @@ class LabResult < FHIRRecord
 
   def code=(lab)
     update_code(lab)
-    super(lab)
+    super
   end
 
   def name

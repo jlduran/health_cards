@@ -38,21 +38,21 @@ class Patient < FHIRRecord
 
   def given=(giv)
     first_name.given = giv.present? ? [giv] : nil
-    super(giv)
+    super
   end
 
   delegate :family, to: :first_name
 
   def family=(fam)
     first_name.family = fam.presence
-    super(fam)
+    super
   end
 
   delegate :gender, to: :json
 
   def gender=(gen)
     json.gender = gen
-    super(gen)
+    super
   end
 
   def birth_date
@@ -60,7 +60,7 @@ class Patient < FHIRRecord
   end
 
   def birth_date=(bdt)
-    super(bdt)
+    super
     json.birthDate = to_fhir_time(attributes['birth_date'])
     attributes['birth_date']
   end
@@ -71,7 +71,7 @@ class Patient < FHIRRecord
 
   def street_line1=(st1)
     address.line[0] = st1.presence
-    super(st1)
+    super
   end
 
   def street_line2
@@ -80,21 +80,21 @@ class Patient < FHIRRecord
 
   def street_line2=(st2)
     address.line[1] = st2.presence
-    super(st2)
+    super
   end
 
   delegate :city, to: :address
 
   def city=(cit)
     address.city = cit.presence
-    super(cit)
+    super
   end
 
   delegate :state, to: :address
 
   def state=(sta)
     address.state = sta.presence
-    super sta
+    super
   end
 
   def zip_code
@@ -103,7 +103,7 @@ class Patient < FHIRRecord
 
   def zip_code=(zip)
     address.postalCode = zip.presence
-    super(zip)
+    super
   end
 
   def phone
@@ -112,7 +112,7 @@ class Patient < FHIRRecord
 
   def phone=(pho)
     phone_contact.value = pho.presence
-    super(pho)
+    super
   end
 
   def email
@@ -121,7 +121,7 @@ class Patient < FHIRRecord
 
   def email=(ema)
     email_contact.value = ema.presence
-    super(ema)
+    super
   end
 
   def to_bundle(base_url)
